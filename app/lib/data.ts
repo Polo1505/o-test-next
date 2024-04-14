@@ -3,17 +3,21 @@
 import axios, { AxiosError } from 'axios';
 import { IOrderBody } from '@/app/lib/definitions';
 
-export async function fetchReviews() {
+export const fetchReviews = (async () => {
   try {
     const res = await axios.get(process.env.DOMAIN_URL + '/reviews');
     return res.data;
   } catch (error) {
     console.error('Request error:', error);
-    throw new Error('Failed to fetch reviews');
+    // throw new Error('Failed to fetch reviews');
+    return {items:[{
+      id: 1,
+      text: ""
+    },]};
   }
-}
+})
 
-export async function fetchProducts(pageParams: number) {
+export const fetchProducts = (async (pageParams: number) =>{
   try {
     const res = await axios.get(process.env.DOMAIN_URL + '/products', { params: {page: pageParams, page_size: 3} });
     
@@ -22,9 +26,9 @@ export async function fetchProducts(pageParams: number) {
     console.error('Request error:', error);
     throw new Error('Failed to fetch products');
   }
-}
+})
 
-export async function createOrder(body: IOrderBody) {
+export const createOrder = (async (body: IOrderBody) => {
   try {
     const res = await axios.post(process.env.DOMAIN_URL + '/order', body);
     return res.data;
@@ -36,4 +40,4 @@ export async function createOrder(body: IOrderBody) {
       throw new Error('Failed to create order');
     }
   }
-}
+})
