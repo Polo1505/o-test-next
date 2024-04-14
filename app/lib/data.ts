@@ -5,7 +5,7 @@ import { IOrderBody } from '@/app/lib/definitions';
 
 export const fetchReviews = (async () => {
   try {
-    const res = await axios.get(process.env.DOMAIN_URL + '/reviews');
+    const res = await axios.get(process.env.VERCEL_URL + '/reviews');
     return res.data;
   } catch (error) {
     console.error('Request error:', error);
@@ -19,7 +19,7 @@ export const fetchReviews = (async () => {
 
 export const fetchProducts = (async (pageParams: number) =>{
   try {
-    const res = await axios.get(process.env.DOMAIN_URL + '/products', { params: {page: pageParams, page_size: 3} });
+    const res = await axios.get(process.env.VERCEL_URL + '/products', { params: {page: pageParams, page_size: 3} });
     
     return res.data.items;
   } catch (error) {
@@ -30,7 +30,7 @@ export const fetchProducts = (async (pageParams: number) =>{
 
 export const createOrder = (async (body: IOrderBody) => {
   try {
-    const res = await axios.post(process.env.DOMAIN_URL + '/order', body);
+    const res = await axios.post(process.env.VERCEL_URL + '/order', body);
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError && error.response?.status === 400) {
